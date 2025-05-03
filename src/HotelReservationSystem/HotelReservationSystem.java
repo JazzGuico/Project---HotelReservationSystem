@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.sql.*;
 
 public class HotelReservationSystem {
-    private JPanel mainPanel;
+    public JPanel mainPanel;
     private JPanel Home;
     private JFrame frame;
     private JPanel navbar;
@@ -21,7 +21,7 @@ public class HotelReservationSystem {
     private JPanel bookingPanel;
 
     private JTextField guestnum;
-    private CardLayout cardLayout;
+    public CardLayout cardLayout;
 
     private JDateChooser arrivaldate;
     private JDateChooser departuredate;
@@ -60,7 +60,7 @@ public class HotelReservationSystem {
 
         //Panels
         signPanel = new SignUpPanel();
-        mainPanel.add(signPanel, "signup");
+        mainPanel.add(signPanel, "Sign up");
 
         roomPanel = new RoomsPanel();
         mainPanel.add(roomPanel, "Rooms");
@@ -70,8 +70,7 @@ public class HotelReservationSystem {
 
         bookingPanel = new BookingPanel(); 
         mainPanel.add(bookingPanel, "Book");
-
-        mainPanel.add(signPanel, "Sign up");
+        
 
         //datechoosers
         arrivaldate = new JDateChooser();
@@ -179,6 +178,7 @@ public class HotelReservationSystem {
         homeButton.addActionListener(e -> cardLayout.show(mainPanel, "home"));
         rooms.addActionListener(e -> cardLayout.show(mainPanel, "Rooms"));
         contact.addActionListener(e -> cardLayout.show(mainPanel, "Contact"));
+        //booking.addActionListener(e -> cardLayout.show(mainPanel, "Book"));
         
         booking.addActionListener(e -> {
             
@@ -186,7 +186,7 @@ public class HotelReservationSystem {
                 cardLayout.show(mainPanel, "Book");
             } else {
                 JOptionPane.showMessageDialog(frame, "Please log in to make a booking.", "Login Required", JOptionPane.WARNING_MESSAGE);
-                // Optionally, you could automatically switch to the login/sign-up page
+                
                 cardLayout.show(mainPanel, "Sign up");
             }
         });

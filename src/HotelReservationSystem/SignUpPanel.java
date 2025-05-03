@@ -71,7 +71,7 @@ public class SignUpPanel extends JPanel {
         cardPanel.setBounds(330, 120, 580, 380);
         add(cardPanel);
 
-        // Sign up panel
+        //Sign up panel
         mysignupPanel = new JPanel();
         mysignupPanel.setBackground(new Color(0xedf2f4));
         mysignupPanel.setLayout(null);
@@ -151,7 +151,7 @@ public class SignUpPanel extends JPanel {
             }
         });
 
-        // Log in panel
+        //Log in panel
         myloginPanel = new JPanel();
         myloginPanel.setBackground(new Color(0xedf2f4));
         myloginPanel.setLayout(null);
@@ -174,10 +174,32 @@ public class SignUpPanel extends JPanel {
         loginPass.setForeground(new Color(0xDDA15E));
         myloginPanel.add(loginPass);
 
+        JPanel loginPasswordContainer = new JPanel(null);
+        loginPasswordContainer.setBounds(290, 160, 256, 30);
+        loginPasswordContainer.setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        myloginPanel.add(loginPasswordContainer);
+
         JPasswordField inputLoginPass = new JPasswordField();
-        inputLoginPass.setBounds(290, 160, 256, 30);
+        inputLoginPass.setBounds(0, 0, 220, 30);
         inputLoginPass.setEchoChar('•');
-        myloginPanel.add(inputLoginPass);
+        inputLoginPass.setBorder(null);
+        inputLoginPass.setOpaque(false);
+        loginPasswordContainer.add(inputLoginPass);
+
+        JButton toggleLoginPass = new JButton("👁");
+        toggleLoginPass.setBounds(220, 0, 36, 30);
+        toggleLoginPass.setFocusPainted(false);
+        toggleLoginPass.setBorder(null);
+        toggleLoginPass.setContentAreaFilled(false);
+        loginPasswordContainer.add(toggleLoginPass);
+
+        toggleLoginPass.addActionListener(e -> {
+            if (inputLoginPass.getEchoChar() == '\u0000') {
+                inputLoginPass.setEchoChar('•');
+            } else {
+                inputLoginPass.setEchoChar('\u0000');
+            }
+        });
 
         JButton LoginSubmit = new JButton("Log in");
         LoginSubmit.setBounds(226, 300, 130, 40);
@@ -212,8 +234,9 @@ public class SignUpPanel extends JPanel {
                         String firstName = rs.getString("fname");
                         JOptionPane.showMessageDialog(this, "Welcome back, " + firstName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
                         isLoggedIn = true;
-                        currentUser = email; // Store user info for later use
-                        // TODO: Redirect to booking page or dashboard after login
+                        currentUser = email; 
+                    
+                        
                     } else {
                         JOptionPane.showMessageDialog(this, "Invalid email or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
                     }
