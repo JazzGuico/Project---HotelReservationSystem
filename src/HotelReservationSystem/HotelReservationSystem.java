@@ -179,6 +179,7 @@ public class HotelReservationSystem {
         homeButton.addActionListener(e -> cardLayout.show(mainPanel, "home"));
         rooms.addActionListener(e -> cardLayout.show(mainPanel, "Rooms"));
         contact.addActionListener(e -> cardLayout.show(mainPanel, "Contact"));
+        //booking.addActionListener(e -> cardLayout.show(mainPanel, "Book"));
 
         booking.addActionListener(e -> {
             if (SignUpPanel.isLoggedIn) {
