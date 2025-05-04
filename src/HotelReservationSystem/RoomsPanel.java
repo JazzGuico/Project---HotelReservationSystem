@@ -44,7 +44,7 @@ public class RoomsPanel extends JPanel {
         page.add(floorLabel);
  
         JLabel roomLabel = new JLabel("Rooms: " + roomDescription);
-        roomLabel.setFont(new Font("Serif", Font.PLAIN, 20));
+        roomLabel.setFont(new Font("Serif", Font.BOLD, 20));
         roomLabel.setBounds(60, 20, 400, 40);
         roomLabel.setForeground(new Color(0x003049));
         page.add(roomLabel);

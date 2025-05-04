@@ -21,7 +21,7 @@ public class ContactPanel extends JPanel {
         JPanel panel = createPanel();
         panel.add(createButton("REFUND", 20, 20, e -> cardLayout.show(cardPanel, "refund")));
         panel.add(createLabel("Contacts", 540, 150, 24, Font.BOLD));
-        panel.add(createLabel("To request a refund, please click the REFUND button and click your preferred contact to see the instruction.", 180, 220, 16, Font.PLAIN));
+        panel.add(createLabel("To request a refund, please click the REFUND button and click your preferred contact to see the instruction.", 230, 220, 16, Font.PLAIN));
         panel.add(createLabel("FACEBOOK: SMCHotel", 500, 550, 16, Font.PLAIN));
         panel.add(createLabel("GMAIL: SMCHotel@gmail.com", 500, 580, 16, Font.PLAIN));
         panel.add(createLabel("CONTACT NUMBER: 09123456789", 500, 610, 16, Font.PLAIN));
@@ -44,7 +44,7 @@ public class ContactPanel extends JPanel {
     private JPanel createRefundDetailPage(String method) {
         JPanel panel = createPanel();
         if (method.equals("facebook")) {
-            panel.add(createLabel("Please message our official Facebook page: SMCHotel.", 360, 180, 18, Font.PLAIN));
+            panel.add(createLabel("Please message our official Facebook page: SMCHotel.", 370, 180, 18, Font.PLAIN));
             panel.add(createLabel("Include your booking reference and full name in the message.", 370, 220, 16, Font.PLAIN));
         } else {
             panel.add(createLabel("Send an email to SMCHotel@gmail.com with the following:", 350, 180, 18, Font.PLAIN));
@@ -63,7 +63,7 @@ public class ContactPanel extends JPanel {
         panel.add(createLabel("Customer Service - Refund Request", 350, 180, 20, Font.BOLD));
  
         //Username Input
-        panel.add(createLabel("Username:", 370, 220, 16, Font.PLAIN));
+        panel.add(createLabel("Email:", 370, 220, 16, Font.PLAIN));
         JTextField usernameField = new JTextField();
         usernameField.setBounds(500, 220, 250, 30);
         panel.add(usernameField);

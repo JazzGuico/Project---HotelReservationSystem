@@ -2,35 +2,39 @@ package HotelReservationSystem;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.sql.*;
 
 public class SignUpPanel extends JPanel {
-    
     private JPanel mysignupPanel;
     private JPanel containerchoose;
     private JPanel hline;
     private JPanel vline;
-
     private JPanel cardPanel;
     private CardLayout SigninCardLayout;
     private JPanel myloginPanel;
-
     private JLabel fname;
     private JLabel lname;
     private JLabel signpass;
     private JLabel signuser;
-
     private JTextField inputfname;
     private JTextField inputlname;
     private JTextField inputsignuser;
     private JPasswordField inputsignpass;
 
-    //variable for  the loggedIn variable and currentUser
+    // Variables for the loggedIn flag and currentUser
     public static boolean isLoggedIn = false;
     public static String currentUser = null;
 
-    public SignUpPanel() {
+    // Variables for main panel and booking panel (added for panel switch after login)
+    private CardLayout cardLayout;
+    private JPanel mainPanel;
+    private JPanel bookingPanel;
+
+    public SignUpPanel(CardLayout cardLayout, JPanel mainPanel, JPanel bookingPanel) {
+        this.cardLayout = cardLayout;
+        this.mainPanel = mainPanel;
+        this.bookingPanel = bookingPanel;
+
         setBackground(new Color(0xFDF0D5));
         setLayout(null);
 
@@ -71,7 +75,7 @@ public class SignUpPanel extends JPanel {
         cardPanel.setBounds(330, 120, 580, 380);
         add(cardPanel);
 
-        //Sign up panel
+        // Sign up panel
         mysignupPanel = new JPanel();
         mysignupPanel.setBackground(new Color(0xedf2f4));
         mysignupPanel.setLayout(null);
@@ -84,28 +88,28 @@ public class SignUpPanel extends JPanel {
         SignSubmit.setFocusPainted(false);
         mysignupPanel.add(SignSubmit);
 
-        fname = new JLabel("   First Name:");
+        fname = new JLabel(" First Name:");
         fname.setBounds(32, 52, 256, 30);
         fname.setBackground(new Color(0x2b2d42));
         fname.setForeground(new Color(0xDDA15E));
         fname.setOpaque(true);
         mysignupPanel.add(fname);
 
-        lname = new JLabel("   Last Name:");
+        lname = new JLabel(" Last Name:");
         lname.setBounds(32, 116, 256, 30);
         lname.setBackground(new Color(0x2b2d42));
         lname.setForeground(new Color(0xDDA15E));
         lname.setOpaque(true);
         mysignupPanel.add(lname);
 
-        signuser = new JLabel("   Email:");
+        signuser = new JLabel(" Email:");
         signuser.setBounds(32, 180, 256, 30);
         signuser.setBackground(new Color(0x2b2d42));
         signuser.setForeground(new Color(0xDDA15E));
         signuser.setOpaque(true);
         mysignupPanel.add(signuser);
 
-        signpass = new JLabel("   Password:");
+        signpass = new JLabel(" Password:");
         signpass.setBounds(32, 244, 256, 30);
         signpass.setBackground(new Color(0x2b2d42));
         signpass.setForeground(new Color(0xDDA15E));
@@ -128,21 +132,21 @@ public class SignUpPanel extends JPanel {
         passwordContainer.setBounds(290, 244, 256, 30);
         passwordContainer.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         mysignupPanel.add(passwordContainer);
- 
+
         inputsignpass = new JPasswordField();
         inputsignpass.setBounds(0, 0, 220, 30);
         inputsignpass.setEchoChar('•');
         inputsignpass.setBorder(null);
         inputsignpass.setOpaque(false);
         passwordContainer.add(inputsignpass);
- 
+
         JButton togglepass = new JButton("👁");
         togglepass.setBounds(220, 0, 36, 30);
         togglepass.setFocusPainted(false);
         togglepass.setBorder(null);
         togglepass.setContentAreaFilled(false);
         passwordContainer.add(togglepass);
- 
+
         togglepass.addActionListener(e -> {
             if (inputsignpass.getEchoChar() == '\u0000') {
                 inputsignpass.setEchoChar('•');
@@ -151,12 +155,12 @@ public class SignUpPanel extends JPanel {
             }
         });
 
-        //Log in panel
+        // Log in panel
         myloginPanel = new JPanel();
         myloginPanel.setBackground(new Color(0xedf2f4));
         myloginPanel.setLayout(null);
 
-        JLabel loginUser = new JLabel("   Email:");
+        JLabel loginUser = new JLabel(" Email:");
         loginUser.setBounds(32, 100, 256, 30);
         loginUser.setOpaque(true);
         loginUser.setBackground(new Color(0x2b2d42));
@@ -167,7 +171,7 @@ public class SignUpPanel extends JPanel {
         inputLoginUser.setBounds(290, 100, 256, 30);
         myloginPanel.add(inputLoginUser);
 
-        JLabel loginPass = new JLabel("   Password:");
+        JLabel loginPass = new JLabel(" Password:");
         loginPass.setBounds(32, 160, 256, 30);
         loginPass.setOpaque(true);
         loginPass.setBackground(new Color(0x2b2d42));
@@ -208,7 +212,7 @@ public class SignUpPanel extends JPanel {
         LoginSubmit.setFont(new Font("Arial", Font.BOLD, 20));
         LoginSubmit.setFocusPainted(false);
         myloginPanel.add(LoginSubmit);
-        
+
         // Login function
         LoginSubmit.addActionListener(e -> {
             String email = inputLoginUser.getText().trim();
@@ -220,80 +224,35 @@ public class SignUpPanel extends JPanel {
             }
 
             Connection conn = DBConnection.getConnection();
-
             if (conn != null) {
                 try {
                     String query = "SELECT * FROM users WHERE email = ? AND signpass = ?";
                     PreparedStatement stmt = conn.prepareStatement(query);
                     stmt.setString(1, email);
                     stmt.setString(2, password);
-
                     ResultSet rs = stmt.executeQuery();
 
                     if (rs.next()) {
                         String firstName = rs.getString("fname");
                         JOptionPane.showMessageDialog(this, "Welcome back, " + firstName + "!", "Login Successful", JOptionPane.INFORMATION_MESSAGE);
                         isLoggedIn = true;
-                        currentUser = email; 
-                    
-                        
+                        currentUser = email;
+                        cardLayout.show(mainPanel, "Book");
                     } else {
                         JOptionPane.showMessageDialog(this, "Invalid email or password.", "Login Failed", JOptionPane.ERROR_MESSAGE);
                     }
-
-                    rs.close();
-                    stmt.close();
-                    conn.close();
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(this, "Database error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "An error occurred while connecting to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
-                JOptionPane.showMessageDialog(this, "Database connection not available.", "Connection Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         cardPanel.add(mysignupPanel, "SignUp");
-        cardPanel.add(myloginPanel, "Login");
+        cardPanel.add(myloginPanel, "LogIn");
 
-        SigninCardLayout.show(cardPanel, "SignUp");
+        // Add action listeners to buttons
         ChooseSignUpButton.addActionListener(e -> SigninCardLayout.show(cardPanel, "SignUp"));
-        ChooseLoginUpButton.addActionListener(e -> SigninCardLayout.show(cardPanel, "Login"));
-
-        // Sign up button action
-        SignSubmit.addActionListener(e -> signUpUser());
-    }
-
-    // SignUp function
-    private void signUpUser() {
-        String fname = inputfname.getText();
-        String lname = inputlname.getText();
-        String email = inputsignuser.getText();
-        String password = new String(inputsignpass.getPassword());
-
-        Connection conn = DBConnection.getConnection();
-
-        if (conn != null) {
-            try {
-                String sql = "INSERT INTO users (fname, lname, email, signpass) VALUES (?, ?, ?, ?)";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                stmt.setString(1, fname);
-                stmt.setString(2, lname);
-                stmt.setString(3, email);
-                stmt.setString(4, password);
-
-                int rowsInserted = stmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    JOptionPane.showMessageDialog(this, "User registered successfully!");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Registration failed.");
-                }
-
-                conn.close();
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Database connection not available.");
-        }
+        ChooseLoginUpButton.addActionListener(e -> SigninCardLayout.show(cardPanel, "LogIn"));
     }
 }
