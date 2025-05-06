@@ -154,6 +154,40 @@ public class SignUpPanel extends JPanel {
                 inputsignpass.setEchoChar('\u0000');
             }
         });
+        
+        SignSubmit.addActionListener(e -> {
+            String firstName = inputfname.getText().trim();
+            String lastName = inputlname.getText().trim();
+            String email = inputsignuser.getText().trim();
+            String password = new String(inputsignpass.getPassword());
+
+            if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please fill in all fields.", "Missing Input", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            Connection conn = DBConnection.getConnection();
+            if (conn != null) {
+                try {
+                    String query = "INSERT INTO users (fname, lname, email, signpass, created_at) VALUES (?, ?, ?, ?, NOW())";
+                    PreparedStatement stmt = conn.prepareStatement(query);
+                    stmt.setString(1, firstName);
+                    stmt.setString(2, lastName);
+                    stmt.setString(3, email);
+                    stmt.setString(4, password);
+                    stmt.executeUpdate();
+
+                    JOptionPane.showMessageDialog(this, "Sign up successful! Please log in.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    SigninCardLayout.show(cardPanel, "LogIn");
+
+                } catch (SQLIntegrityConstraintViolationException ex) {
+                    JOptionPane.showMessageDialog(this, "This email is already registered.", "Duplicate Email", JOptionPane.ERROR_MESSAGE);
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "An error occurred during sign up.", "Database Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
 
         // Log in panel
         myloginPanel = new JPanel();
