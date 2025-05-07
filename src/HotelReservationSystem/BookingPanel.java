@@ -457,6 +457,11 @@ public class BookingPanel extends JPanel {
             roomTypeMap.clear();
             JOptionPane.showMessageDialog(this, "Booking completed!");
             switchToPanel("single");
+            //go to finalPage
+            JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
+            topFrame.dispose(); //to close the current booking window
+            new FinalPage(referral_number); 
+
 
         } catch (SQLException ex) {
             try {
@@ -468,7 +473,6 @@ public class BookingPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Failed to complete booking.");
         }
     }
-
 
     private void switchToPanel(String panelName) {
         panpan.setVisible(false);
@@ -504,6 +508,40 @@ public class BookingPanel extends JPanel {
         TopMessage2.setText("Departure Date: " + departure);
         TopMessage3.setText("Number of Guests: " + guests);
     }
+    
+    public class FinalPage {
+        JFrame frame2;
+
+        public FinalPage(String referralCode) {
+            frame2 = new JFrame("Reservation Successful");
+            frame2.setSize(400, 300);
+            frame2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame2.setLayout(new BorderLayout());
+
+            // Message panel to hold both messages
+            JPanel messagePanel = new JPanel();
+            messagePanel.setLayout(new BoxLayout(messagePanel, BoxLayout.Y_AXIS));
+
+            JLabel thankYouLabel = new JLabel("Thank you for booking!", JLabel.CENTER);
+            thankYouLabel.setFont(new Font("Arial", Font.BOLD, 18));
+            thankYouLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            JLabel codeLabel = new JLabel("Your referral code: " + referralCode, JLabel.CENTER);
+            codeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+            codeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+            messagePanel.add(Box.createVerticalGlue());
+            messagePanel.add(thankYouLabel);
+            messagePanel.add(Box.createVerticalStrut(10));
+            messagePanel.add(codeLabel);
+            messagePanel.add(Box.createVerticalGlue());
+
+            frame2.add(messagePanel, BorderLayout.CENTER);
+            frame2.setLocationRelativeTo(null);
+            frame2.setVisible(true);
+        }
+    }
+
 
     private JPanel createLegendPanel() {
         JPanel legendPanel = new JPanel();
