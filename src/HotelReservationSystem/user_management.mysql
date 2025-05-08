@@ -1,0 +1,95 @@
+-- User Table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    fname VARCHAR(100) NOT NULL,
+    lname VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    signpass VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Room Table
+CREATE TABLE rooms (
+    room_id INT AUTO_INCREMENT PRIMARY KEY,
+    room_number INT NOT NULL UNIQUE,
+    floor INT NOT NULL,
+    room_type VARCHAR(50),
+    price DECIMAL(10, 2),
+    available BOOLEAN NOT NULL
+);
+
+-- Reservation Table
+CREATE TABLE reservations (
+    reservation_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    room_id INT NOT NULL,
+
+    user_email VARCHAR(255) NOT NULL,
+    phone_number VARCHAR(20),
+    referral_number VARCHAR(100),
+    room_number INT NOT NULL,
+    room_type VARCHAR(100),
+    arrival_date DATE NOT NULL,
+    departure_date DATE NOT NULL,
+    guests INT CHECK (guests > 0),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    -- Foreign Keys
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (room_id) REFERENCES rooms(room_id) ON DELETE CASCADE
+);
+
+
+
+-- Insertions on rooms
+INSERT INTO rooms (room_number, floor, room_type, price, available) VALUES
+(301, 3, 'single', 750.00, 1), 
+(302, 3, 'single', 750.00, 1), 
+(303, 3, 'single', 750.00, 1),
+(304, 3, 'single', 750.00, 1), 
+(305, 3, 'single', 750.00, 1), 
+(306, 3, 'single', 750.00, 1),
+(307, 3, 'single', 750.00, 1), 
+(308, 3, 'single', 750.00, 1),
+
+(401, 4, 'single', 750.00, 1), 
+(402, 4, 'single', 750.00, 1), 
+(403, 4, 'single', 750.00, 1),
+(404, 4, 'single', 750.00, 1), 
+(405, 4, 'single', 750.00, 1), 
+(406, 4, 'single', 750.00, 1),
+(407, 4, 'single', 750.00, 1), 
+(408, 4, 'single', 750.00, 1),
+
+(501, 5, 'single', 750.00, 1), 
+(502, 5, 'single', 750.00, 1), 
+(503, 5, 'single', 750.00, 1),
+(504, 5, 'single', 750.00, 1), 
+(505, 5, 'single', 750.00, 1), 
+(506, 5, 'single', 750.00, 1),
+(507, 5, 'single', 750.00, 1), 
+(508, 5, 'single', 750.00, 1),
+
+(601, 6, 'double', 1400.00, 1), 
+(602, 6, 'double', 1400.00, 1),
+(603, 6, 'double', 1400.00, 1), 
+(604, 6, 'double', 1400.00, 1),
+
+(701, 7, 'double', 1400.00, 1), 
+(702, 7, 'double', 1400.00, 1),
+(703, 7, 'double', 1400.00, 1), 
+(704, 7, 'double', 1400.00, 1),
+
+(801, 8, 'double', 1400.00, 1), 
+(802, 8, 'double', 1400.00, 1),
+(803, 8, 'double', 1400.00, 1), 
+(804, 8, 'double', 1400.00, 1),
+
+(901, 9, 'suite', 3500.00, 1), 
+(902, 9, 'suite', 3500.00, 1),
+
+(1001, 10, 'suite', 3500.00, 1), 
+(1002, 10, 'suite', 3500.00, 1);
+
+
+
