@@ -25,7 +25,6 @@ public class BookingPanel extends JPanel {
     private final Set<Integer> selectedRooms = new HashSet<>();
     private final Map<Integer, String> roomTypeMap = new HashMap<>();
     
-    // Characters allowed in the referral code
     private JTextField referralField;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     private static final SecureRandom secureRandom = new SecureRandom();
@@ -93,7 +92,7 @@ public class BookingPanel extends JPanel {
         roomTypeLabel.setForeground(new Color(0xDDA15E));
         add(roomTypeLabel);
 
-        // Single Rooms Panel
+        //Single Rooms Panel
         panpan = createRoomPanel(new int[]{3, 4, 5}, 8, "single");
         JButton nextToDouble = createNavButton("Next →");
         nextToDouble.setBounds(525, 370, 100, 30);
@@ -117,7 +116,7 @@ public class BookingPanel extends JPanel {
         panpan.add(createLegendPanel());
         add(panpan);
 
-        // Double Rooms Panel
+        //Double Rooms Panel
         panpan2 = createRoomPanel(new int[]{6, 7, 8}, 4, "double");
         JButton prevToSingle = createNavButton("← Prev");
         prevToSingle.setBounds(415, 370, 100, 30);
@@ -148,7 +147,7 @@ public class BookingPanel extends JPanel {
         panpan2.setVisible(false);
         add(panpan2);
 
-        // Suite Rooms Panel
+        //Suite Rooms Panel
         panpan3 = createRoomPanel(new int[]{9, 10}, 2, "suite");
         JButton prevToDouble = createNavButton("← Prev");
         prevToDouble.setBounds(415, 370, 100, 30);
@@ -371,7 +370,7 @@ public class BookingPanel extends JPanel {
         try {
             conn.setAutoCommit(false);
 
-            // Fetch user_id based on email (case ignored)
+            //fetch user_id based on email (case ignored)
             int userId = -1;
             String userQuery = "SELECT user_id FROM users WHERE LOWER(email) = LOWER(?)";
             try (PreparedStatement userStmt = conn.prepareStatement(userQuery)) {
@@ -390,7 +389,7 @@ public class BookingPanel extends JPanel {
             for (Integer roomNumber : selectedRooms) {
                 String type = roomTypeMap.get(roomNumber);
 
-                // Check if the room is available first
+                //check if the room is available first
                 String availabilityQuery = "SELECT available FROM rooms WHERE room_number = ?";
                 boolean isAvailable = false;
                 try (PreparedStatement availabilityStmt = conn.prepareStatement(availabilityQuery)) {
@@ -411,7 +410,7 @@ public class BookingPanel extends JPanel {
                     }
                 }
 
-                // Fetch room_id based on room_number
+                //Fetch room_id based on room_number
                 int roomId = -1;
                 String roomQuery = "SELECT room_id FROM rooms WHERE room_number = ?";
                 try (PreparedStatement roomStmt = conn.prepareStatement(roomQuery)) {
@@ -427,7 +426,7 @@ public class BookingPanel extends JPanel {
                     }
                 }
 
-                // Insert reservation
+                //insert reservation
                 String insertSQL = "INSERT INTO reservations (user_id, room_id, user_email, phone_number, room_number, room_type, referral_number, arrival_date, departure_date, guests) " +
                                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 try (PreparedStatement stmt = conn.prepareStatement(insertSQL)) {
@@ -444,7 +443,7 @@ public class BookingPanel extends JPanel {
                     stmt.executeUpdate();
                 }
 
-                // Update room as unavailable
+                //Update room as unavailable
                 String updateRoom = "UPDATE rooms SET available = false WHERE room_number = ?";
                 try (PreparedStatement updateStmt = conn.prepareStatement(updateRoom)) {
                     updateStmt.setInt(1, roomNumber);
@@ -457,9 +456,9 @@ public class BookingPanel extends JPanel {
             roomTypeMap.clear();
             JOptionPane.showMessageDialog(this, "Booking completed!");
             switchToPanel("single");
-            //go to finalPage
+            //go to finalPage(end or close the main gui)
             JFrame topFrame = (JFrame) SwingUtilities.getWindowAncestor(this);
-            topFrame.dispose(); //to close the current booking window
+            topFrame.dispose(); 
             new FinalPage(referral_number); 
 
 

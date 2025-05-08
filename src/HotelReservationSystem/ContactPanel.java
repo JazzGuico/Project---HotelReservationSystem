@@ -23,21 +23,21 @@ public class ContactPanel extends JPanel {
     private JPanel createMainContactPage() {
         JPanel panel = createPanel();
         panel.add(createButton("REFUND", 20, 20, e -> cardLayout.show(cardPanel, "refund")));
-        panel.add(createLabel("Contacts", 540, 150, 24, Font.BOLD));
-        panel.add(createLabel("To request a refund, please click the REFUND button and click your preferred contact to see the instruction.", 230, 220, 16, Font.PLAIN));
-        panel.add(createLabel("FACEBOOK: SMCHotel", 500, 550, 16, Font.PLAIN));
-        panel.add(createLabel("GMAIL: SMCHotel@gmail.com", 500, 580, 16, Font.PLAIN));
-        panel.add(createLabel("CONTACT NUMBER: 09123456789", 500, 610, 16, Font.PLAIN));
+        panel.add(createLabel("Contacts", 585, 150, 24, Font.BOLD));
+        panel.add(createLabel("To request a refund, please click the REFUND button and click your preferred contact to see the instruction.", 270, 220, 16, Font.PLAIN));
+        panel.add(createLabel("FACEBOOK: SMCHotel", 500, 520, 16, Font.PLAIN));
+        panel.add(createLabel("GMAIL: SMCHotel@gmail.com", 500, 550, 16, Font.PLAIN));
+        panel.add(createLabel("CONTACT NUMBER: 09123456789", 500, 580, 16, Font.PLAIN));
         return panel;
     }
 
     private JPanel createRefundOptionsPage() {
         JPanel panel = createPanel();
-        panel.add(createLabel("Click your preferred contact to see the instruction:", 370, 180, 20, Font.BOLD));
-        panel.add(createButton("Contact via Facebook", 500, 220, e -> cardLayout.show(cardPanel, "facebook")));
-        panel.add(createButton("Contact via Gmail", 500, 270, e -> cardLayout.show(cardPanel, "gmail")));
-        panel.add(createButton("Customer Service", 500, 350, e -> cardLayout.show(cardPanel, "customer_service")));
-        panel.add(createLabel("Customer Service is available 24/7.", 480, 400, 16, Font.ITALIC));
+        panel.add(createLabel("Click your preferred contact to see the instruction:", 385, 180, 20, Font.BOLD));
+        panel.add(createButton("Contact via Facebook", 515, 220, e -> cardLayout.show(cardPanel, "facebook")));
+        panel.add(createButton("Contact via Gmail", 515, 270, e -> cardLayout.show(cardPanel, "gmail")));
+        panel.add(createButton("Customer Service", 515, 350, e -> cardLayout.show(cardPanel, "customer_service")));
+        panel.add(createLabel("Customer Service is available 24/7.", 495, 400, 16, Font.ITALIC));
         panel.add(createButton("Back", 20, 20, e -> cardLayout.show(cardPanel, "main")));
         return panel;
     }
@@ -45,8 +45,8 @@ public class ContactPanel extends JPanel {
     private JPanel createRefundDetailPage(String method) {
         JPanel panel = createPanel();
         if (method.equals("facebook")) {
-            panel.add(createLabel("Please message our official Facebook page: SMCHotel.", 370, 180, 18, Font.PLAIN));
-            panel.add(createLabel("Include your booking reference and full name in the message.", 370, 220, 16, Font.PLAIN));
+            panel.add(createLabel("Please message our official Facebook page: SMCHotel.", 400, 180, 18, Font.PLAIN));
+            panel.add(createLabel("Include your booking reference and full name in the message.", 400, 220, 16, Font.PLAIN));
         } else {
             panel.add(createLabel("Send an email to SMCHotel@gmail.com with the following:", 350, 180, 18, Font.PLAIN));
             panel.add(createLabel("- Booking reference number", 420, 220, 16, Font.PLAIN));
@@ -100,7 +100,7 @@ public class ContactPanel extends JPanel {
 
     private boolean verifyRefundRequest(String email, String password, String referral) {
         try (Connection conn = dbConnection.getConnection()) {
-            // Check referral number from reservations table
+            //Check referral number from reservations table
             String referralSQL = "SELECT * FROM reservations WHERE referral_number = ?";
             try (PreparedStatement referralStmt = conn.prepareStatement(referralSQL)) {
                 referralStmt.setString(1, referral);
@@ -112,7 +112,7 @@ public class ContactPanel extends JPanel {
                 }
             }
 
-            // Check email and password from users table (corrected column: signpass)
+            //Check email and password from users table
             String userSQL = "SELECT * FROM users WHERE email = ? AND signpass = ?";
             try (PreparedStatement userStmt = conn.prepareStatement(userSQL)) {
                 userStmt.setString(1, email);

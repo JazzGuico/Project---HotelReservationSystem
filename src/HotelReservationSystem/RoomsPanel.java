@@ -13,7 +13,7 @@ public class RoomsPanel extends JPanel {
         cardLayout3 = new CardLayout();
         cardPanel2 = new JPanel(cardLayout3);
  
-        //individual pages for each floor (including separate Gym and Café pages)
+        //individual pages for each floor 
         JPanel page1 = createPage("1st Floor", "Lobby", "C:\\Users\\Jazz\\Downloads\\lobby.jpg", 920, 480, "0", true, false, false);  
         JPanel page2 = createPage("2nd Floor - Gym", "Gym", "C:\\Users\\Jazz\\Downloads\\gym.jpg", 920, 480, "0", false, false, false);  
         JPanel page3 = createPage("2nd Floor - Café", "Café", "C:\\Users\\Jazz\\Downloads\\cafe.jpg", 920, 480, "0", false, false, false);  
@@ -31,7 +31,6 @@ public class RoomsPanel extends JPanel {
         add(cardPanel2, BorderLayout.CENTER);
     }
  
-        //Helper function to create each page with individual image sizes and prices
         private JPanel createPage(String floorName, String roomDescription, String imagePath, int imgWidth, int imgHeight, String price, boolean isFirstPage, boolean isLastPage, boolean showPrice) {
         JPanel page = new JPanel();
         page.setBackground(new Color(0xFDF0D5));

@@ -21,11 +21,9 @@ public class SignUpPanel extends JPanel {
     private JTextField inputsignuser;
     private JPasswordField inputsignpass;
 
-    // Variables for the loggedIn flag and currentUser
     public static boolean isLoggedIn = false;
     public static String currentUser = null;
 
-    // Variables for main panel and booking panel (added for panel switch after login)
     private CardLayout cardLayout;
     private JPanel mainPanel;
     private JPanel bookingPanel;
@@ -75,7 +73,7 @@ public class SignUpPanel extends JPanel {
         cardPanel.setBounds(330, 120, 580, 380);
         add(cardPanel);
 
-        // Sign up panel
+        //Sign up panel
         mysignupPanel = new JPanel();
         mysignupPanel.setBackground(new Color(0xedf2f4));
         mysignupPanel.setLayout(null);
@@ -189,7 +187,7 @@ public class SignUpPanel extends JPanel {
             }
         });
 
-        // Log in panel
+        //Log in panel
         myloginPanel = new JPanel();
         myloginPanel.setBackground(new Color(0xedf2f4));
         myloginPanel.setLayout(null);
@@ -247,7 +245,7 @@ public class SignUpPanel extends JPanel {
         LoginSubmit.setFocusPainted(false);
         myloginPanel.add(LoginSubmit);
 
-        // Login function
+        //Login function
         LoginSubmit.addActionListener(e -> {
             String email = inputLoginUser.getText().trim();
             String password = new String(inputLoginPass.getPassword());
@@ -285,7 +283,7 @@ public class SignUpPanel extends JPanel {
         cardPanel.add(mysignupPanel, "SignUp");
         cardPanel.add(myloginPanel, "LogIn");
 
-        // Add action listeners to buttons
+        //action listeners of buttons
         ChooseSignUpButton.addActionListener(e -> SigninCardLayout.show(cardPanel, "SignUp"));
         ChooseLoginUpButton.addActionListener(e -> SigninCardLayout.show(cardPanel, "LogIn"));
     }

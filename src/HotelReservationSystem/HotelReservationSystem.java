@@ -25,7 +25,7 @@ public class HotelReservationSystem {
     }
 
     private void SMCHotel() {
-        // Frames and Panels
+        //Frames and Panels
         frame = new JFrame("SMC HOTEL");
         frame.setSize(1280, 720);
 
@@ -52,7 +52,7 @@ public class HotelReservationSystem {
         container.setLayout(null);
         Home.add(container);
 
-        // Panels
+        //more panels
         bookingPanel = new BookingPanel();
         signPanel = new SignUpPanel(cardLayout, mainPanel, bookingPanel);
         mainPanel.add(signPanel, "signup");
@@ -65,7 +65,7 @@ public class HotelReservationSystem {
 
         mainPanel.add(bookingPanel, "Book");
 
-        // Date choosers
+        //Date choosers
         arrivaldate = new JDateChooser();
         arrivaldate.setDateFormatString("yyyy-MM-dd");
         arrivaldate.setBounds(140, 30, 120, 30);
@@ -76,7 +76,7 @@ public class HotelReservationSystem {
         departuredate.setBounds(426, 30, 120, 30);
         container.add(departuredate);
 
-        // Labels and images
+        //labels and images
         ImageIcon HotelIcon = new ImageIcon("C:\\Users\\Jazz\\Downloads\\hotel.png");
         ImageIcon Palawan = new ImageIcon("C:\\Users\\Jazz\\Downloads\\kagayanpalawan.jpg");
 
@@ -95,7 +95,7 @@ public class HotelReservationSystem {
         palawanlabel.setForeground(new Color(0xFDF0D5));
         Home.add(palawanlabel);
 
-        // Container labels
+        //container labels
         JLabel containernav1 = new JLabel(" Arrival Date: ");
         containernav1.setBounds(18, 30, 120, 30);
         containernav1.setFont(new Font("Arial", Font.BOLD, 16));
@@ -120,12 +120,12 @@ public class HotelReservationSystem {
         containernav3.setOpaque(true);
         container.add(containernav3);
 
-        // Guest number text field
+        //Guest number text field
         guestnum = new JTextField(20);
         guestnum.setBounds(640, 30, 50, 30);
         container.add(guestnum);
 
-        // Buttons
+        //buttons
         JButton homeButton = new JButton("Home");
         homeButton.setBounds(530, 20, 100, 30);
         homeButton.setForeground(new Color(0xDDA15E));
@@ -174,12 +174,11 @@ public class HotelReservationSystem {
         booking.setFocusPainted(false);
         container.add(booking);
 
-        // Button actions
+        //Button actions
         signup.addActionListener(e -> cardLayout.show(mainPanel, "signup"));
         homeButton.addActionListener(e -> cardLayout.show(mainPanel, "home"));
         rooms.addActionListener(e -> cardLayout.show(mainPanel, "Rooms"));
         contact.addActionListener(e -> cardLayout.show(mainPanel, "Contact"));
-        //booking.addActionListener(e -> cardLayout.show(mainPanel, "Book"));
 
         booking.addActionListener(e -> {
             if (SignUpPanel.isLoggedIn) {
@@ -206,7 +205,7 @@ public class HotelReservationSystem {
         frame.setVisible(true);
     }
 
-    // Getters for date and guest input
+    //getters for date and guest input
     public String getArrivalDate() {
         if (arrivaldate.getDate() != null) {
             return new SimpleDateFormat("yyyy-MM-dd").format(arrivaldate.getDate());
