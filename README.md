@@ -23,6 +23,7 @@ Built using Java Swing with a clean, intuitive interface for smooth navigation.
 
 
 **🛠 Technologies Used**
+
 • Java — Core programming language
 
 • Java Swing — For building the graphical user interface (GUI)
