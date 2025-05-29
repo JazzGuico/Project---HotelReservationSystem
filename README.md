@@ -3,6 +3,7 @@ This is a Java-based Hotel Reservation System with a user-friendly Graphical Use
 -----------------------------------------------------------------------------------------
 
 **💡 Features**
+
 🔍 Room Availability Check
 Users can view available rooms in real-time based on room types and availability.
 
